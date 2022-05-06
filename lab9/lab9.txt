@@ -1,0 +1,9 @@
+QUESTION 1.  Read through the program lab9.bin. What do you expect the program to do? More specifically, which register will the program modify when it is run, and what will it contain when the program finishes? (You can probably figure this out merely by reading the comments provided in lab9.bin.)
+
+ANSWER: The program will be stored in x3000 then clear R2 and make R2's value decimal 12. 
+
+
+QUESTION 2.  Explain in a few sentences why the ability to step through a program (run one instruction at a time) is a very useful tool for debugging a program. Debugging is the process of finding and correcting bugs (or errors) in a program. Hint: Finding a bug is often much more difficult than correcting it.
+
+ANSWER: Being able to step through a program is very useful because it allows you to see what is happening during every single step of the program. This can allow you do single out what each step is supposed to do and figure out the individual instruction or step that is causing the problem, rather than just having one final output that could be wildly different than the output that was expected which makes debugging much harder. 
+

@@ -1,0 +1,33 @@
+; This is the file you will use for the lab assignment
+; Make sure to comment your code properly and don't exceed 
+; the line limitation for this assignment.  Good luck!
+
+0011 0001 0000 0000 ; x3100 - starting address of the program
+
+;Jacob Tentis 11/13/19 ECE 120 Lab 10 - Program to Calculate the sum of positive numbers in a set of ten 16 bit numbers
+;The code will Go through the 10 numbers located at memory addresses x3132-313C one at a time, 
+;check to see if they are positive, and if so, add them to a running total held in R5. 
+;After all 10 numbers are read the code will halt and the final value will be stored in R5. 
+
+;R3: Pointer. Points to the location in memory of the value to be analyzed
+;R4: Counter. Starts at 10 then counts down as the 10 numbers are analyzed, used to see when the program should halt
+;R5: Holds the final sum
+;R6: Used to hold the numbers while they are analyzed
+
+;Begin LC3 Code here 
+
+;Initializing Steps
+0101 011 011 1 00000 ;R3 <- 0                     Clear R3
+0101 100 100 1 00000 ;R4 <- 0                     Clear R4
+0101 101 101 1 00000 ;R5 <- 0                     Clear R5
+0001 100 100 1 01010 ;R4 <- R4 + x000A            Set R4 to #10
+1110 011 000101101   ;R3 <- PC + SEXT (PCoffset9) Set R3 to x3132
+;Loop/Analysis Steps
+0110 110 011 000000  ;R6 <- M[R3 + SEXT(offset6)] Set R6 to contents of mem address in R3. 
+0000 100 000000001   ;if n, PC <- PC+x01          R6 neg means skip next step, dont add to total
+0001 101 101 0 00 110;R5 <- R5 + R6               Add R6 to R5, store back in R5
+0001 011 011 1 00001 ;R3 <- R3 + x0001            Increment R3 by +1
+0001 100 100 1 11111 ;R4 <- R4 + xFFFF            Increment R4 by -1
+0000 001 111111010   ;if p, PC <- PC+xFA          R4 pos means start loop again
+;Halting Step
+1111 0000 00100101   ;TRAP x25                    Halts program

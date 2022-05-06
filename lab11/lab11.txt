@@ -1,0 +1,35 @@
+Question 1: Describe the errors that occur when trying to assemble lab11.asm. Identify the cause of each error.
+
+The first error (line 14) that occurs is that when defining a starting location there is just "x3000" at the start of the program instead of ".ORIG x3000".
+
+The next error (line 16) is the assembler not liking that a location hasnt been definied before the first instruction due to the lack of .ORIG from the previous error, so after adding .ORIG x3000 it goes away.
+
+The next error (line 17) is saying that the constant, or the number you are adding to pc, is outside of the range of possible memory locations that can be loaded from. The reason it says this is because the way it is formatted is incorrect. When doing an LD Command the number after the register is the number added to pc to find the memory location, not the exact location you want to pull data from. In this case we want the data from x3010 so we should do LD R2,#14 (or we could use a variable name instead of directly using offsets) because the pc is currently at x3002 and the memory location x3010 is 14 away from x3002. 
+
+The next error (line 19) is saying that the format of the operands in the ADD function is incorrect. This is due to there being two commas between the first two variables when there should only be one. 
+
+The next error (line 30) is the same as the error on line 17. Instead of using the exact memory location you want to load from, x300F, you have to use an offset to the pc that would make the pc = to the location of the memory you want, in this case the pc is at x300A so you would add #5 to get to x300F. (Again, you could also use variable names instead of offsets)
+
+The next error (line 32) is just the assembler getting confused because the Branch command formatting used was incorrect. The code has "BRpz OUTERLOOP" when it should have "BRzp OUTERLOOP", The format should always have the nzp part of the BR command in that order, n before z before p.  
+
+The next error (line 35) is again the same as 30 and 17, the code wants to store the data into memory location x3011 so instead of using that number directly, we need to add a number to the current PC that would equal x3011. In this case the current PC is x300D so to get to x3011 we would do ST R1,#4. (For the third time, we could also simplify it by using a variable name instead of using the offset).
+
+The last error (Line 42) is saying that there is no .END command, which is used to tell the assembler to stop assembling the code. We just need to add ".END" after the final line of code to fix this error.
+
+
+Question 2: For each label in the code, write down the corresponding memory location. 
+Default:
+NAME: OUTERLOOP Location: x3004
+NAME: INNERLOOP Location: x3005
+NAME: Input     Location: x300E
+After Editing:
+NAME: OUTERLOOP LOCATION:x3009
+NAME: INNERLOOP LOCATION:x300A
+NAME: INPUT     LOCATION:x3013
+NAME: ZERO      LOCATION:x3014
+NAME: NEG1      LOCATION:x3015
+NAME: RESULT    LOCATION:x3016
+
+
+Question 3: Between using labels and explicit memory locations/offsets, which one makes the most sense, and why?
+Using labels generally makes the most sense because it allows you to not have to worry about changing all of your offsets in the code when you want to add or remove a line of code for whatever reason. This saves time and effort that would be wasted on going back through all of your code to find and fix the offsets that are affected when you add or remove a line of code. 
